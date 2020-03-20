@@ -15,12 +15,6 @@ class RoomTest < Minitest::Test
         @Songs = [@song1,@song2]
 
         @room1 = Room.new("blue room", @Songs, 2)
-
-        @Guest1 = Guest.new("Jim")
-        @Guest2 = Guest.new("Tim")
-        @Guest3 = Guest.new("Kim")
-        @two_guests = [@guest1,@guest2]
-        @three_guests = [@guest1,@guest2,@guest3]
     end
 
     def test_001_get_name
@@ -28,17 +22,14 @@ class RoomTest < Minitest::Test
     end
 
     def test_002_get_song_list
-        assert_equal(["Happy Birthday", "Merry Christmas"], @room1.get_playlist)
+        assert_equal(["Happy Birthday", "Merry Christmas"], @room1.get_song_list)
+    end
+
+    def test_003_get_total_songs
+        assert_equal(2,@room1.total_songs)
     end
 
     def test_003_get_room_capacity
-        assert_equal(2,@room1.get_room_limit)
+        assert_equal(2,@room1.get_capacity)
     end
-
-    def test_004_check_can_fit_guests_in_room_true
-        assert(@room1.capacity_check(@two_guests))
-    end
-
-    def test_005_check_can_fit_guests_in_room_false
-        refute(@room1.capacity_check("three_guests"))
-    end
+end
