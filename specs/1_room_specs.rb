@@ -34,6 +34,10 @@ class RoomTest < Minitest::Test
     end
 
     def test_004_get_room_tab
-        assert_equal(0,@room1.test_004_get_tab)
+        assert_equal(0,@room1.get_tab)
+    end
+
+    def test_005_add_room_tab
+        assert_equal(5,@room1.add_to_tab(5))
     end
 end

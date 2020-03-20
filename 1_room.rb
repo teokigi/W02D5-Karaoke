@@ -28,4 +28,9 @@ class Room
         return @tab
     end
 
+    def add_to_tab(addition_amount)
+        @tab += addition_amount
+    end
+
+
 end
