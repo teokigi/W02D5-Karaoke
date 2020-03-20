@@ -4,6 +4,7 @@ class Room
         @name = name
         @songs = songs
         @capacity = room_size
+        @tab = 0
     end
 
     def get_name
@@ -23,6 +24,8 @@ class Room
         return @capacity
     end
 
-
+    def get_tab
+        return @tab
+    end
 
 end

@@ -13,6 +13,20 @@ class GuestTest < Minitest::Test
 #block #3: favourite song results in cheer
 #block #3: guests tab
 #block #3: anying extra?
+    def setup
+        @song1 = Song.new("Happy Birthday")
+        @song2 = Song.new("Merry Christmas")
+        @song3 = Song.new("Happy New Year")
+        @Songs = [@song1,@song2]
+
+        @room1 = Room.new("blue room", @Songs, 2)
+
+        @guest1 = Guest.new("Drake",100)
+        @guest2 = Guest.new("Dan",100)
+        @guest3 = Guest.new("Derrik",0)
+        @two_guests = [@guest1,@guest2]
+        @three_guests = [@guest1,@guest2,@guest3]
+    end
 
 
 

@@ -32,4 +32,8 @@ class RoomTest < Minitest::Test
     def test_003_get_room_capacity
         assert_equal(2,@room1.get_capacity)
     end
+
+    def test_004_get_room_tab
+        assert_equal(0,@room1.test_004_get_tab)
+    end
 end
