@@ -40,5 +40,8 @@ class Room
         @tab += addition_amount
     end
 
+    def room_status
+        return @room_in_use
+    end
 
 end

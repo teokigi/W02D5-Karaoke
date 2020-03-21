@@ -4,6 +4,7 @@ Minitest::Reporters.use!
 Minitest::Reporters::SpecReporter.new
 require_relative('../1_room.rb')
 require_relative('../0_song.rb')
+require_relative('../2_guest.r')
 
 class RoomTest < Minitest::Test
 #block #1: add songs to room
@@ -14,6 +15,7 @@ class RoomTest < Minitest::Test
         @song3 = Song.new("Happy New Year")
         @Songs = [@song1,@song2]
 
+        @guest1 = Song.new("jim",100)
         @room1 = Room.new("blue room", @Songs, 2)
     end
 
@@ -39,5 +41,40 @@ class RoomTest < Minitest::Test
 
     def test_005_add_room_tab
         assert_equal(5,@room1.add_to_tab(5))
+    end
+
+    def test_006_room_usage_status_true
+        assert(@room1.room_status)
+    end
+
+    def test_007_room_usage_status_fail
+        refute(@room1.room_status)
+    end
+
+    def test_008_total_guests
+        assert(0,@room1.total_guests)
+    end
+
+    def test_009_add_guest
+        @room1.add_guests(@guest1)
+        assert_equal(1,@room1.total_guests)
+    end
+
+    def test_010_remove_guest
+        @room1.add_guests(@guest1)
+        @room1.remove_guests
+        assert_equal(0.@room1.total_guests)
+    end
+
+    def test_total_song_requests
+        assert(equal(2,@room1.total_requests)
+    end
+
+    def test_add_requests
+        assert_equal(3,@room1.add_requests)
+    end
+
+    def test_remove_requests
+        assert_equal(1,@room1.add_requests)
     end
 end
