@@ -67,14 +67,15 @@ class RoomTest < Minitest::Test
     end
 
     def test_011_total_song_requests
-        assert_equal(2,@room1.total_requests)
+        assert_equal(0,@room1.total_requests)
     end
 
     def test_012_add_requests
-        assert_equal(3,@room1.add_requests)
+        assert_equal(1,@room1.add_requests)
     end
 
     def test_013_remove_requests
-        assert_equal(1,@room1.add_requests)
+        @room1.add_requests
+        assert_equal(0,@room1.remove_requests)
     end
 end

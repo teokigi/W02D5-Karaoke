@@ -44,4 +44,7 @@ class Room
         return @room_in_use
     end
 
+    def total_requests
+        return @song_requests.length
+    end
 end
