@@ -21,11 +21,11 @@ class GuestTest < Minitest::Test
         @song3 = Song.new("Happy New Year")
         @songs = [@song1,@song2]
 
-        @fav_song1 = Song.new("Merry Christmas")
-        @fav_song2 = Song.new("My Immortal")
-        @guest_fav_song = [@fav_song1,@fav_song2]
-        @guest1 = Guest.new("Drake",100,@guest_fav_song,2)
-        @guest2 = Guest.new("Jim",100,@guest_fav_song,3)
+        @fav_song1 = Song.new("This is Halloween")
+        @fav_song2 = Song.new("Merry Christmas")
+        # @guest_fav_song = [@fav_song1,@fav_song2]
+        @guest1 = Guest.new("Drake",100,@fav_song1,2)
+        @guest2 = Guest.new("Jim",100,@fav_song2,3)
 
         @room1 = Room.new("blue room", @songs, 2, 10)
         @occupied_room = Room.new("red room", @songs, 2, 10)
@@ -44,29 +44,35 @@ class GuestTest < Minitest::Test
 
 
     def test_003_guests_check_into_new_room
-        @guest1.check_in_guests(@room1)
+        @guest1.check_in(@room1)
         assert_equal(10,@room1.get_tab)
-        assert(@room1.get_room_in_use_status)
-        assert_equal(2,@room1.total_requests)
-        assert_equal("woohoo",@guest1.find_fav_song(@room1))
+        assert(@room1.room_status)
+        assert_equal(1,@room1.total_requests)
+        refute(@guest1.find_fav_song(@room1))
     end
 
-    def test_004_guests_try_to_check_into_undercapacity_room
-        assert_equal("exceeds room capacity",@guest2.check_in_guests(@room1))
+    def test_004_found_fav_song
+        @guest2.check_in(@room1)
+        assert_equal("woohoo",@guest2.find_fav_song(@room1))
     end
 
-    def test_005_guests_try_to_check_into_occupied_room
-        assert_equal("room occupied",@guest1.check_in_guests(@occupied_room))
+
+    def test_005_guests_try_to_check_into_undercapacity_room
+        assert_equal("exceeds room capacity",@guest2.check_in(@room1))
+    end
+
+    def test_006_guests_try_to_check_into_occupied_room
+        assert_equal("room occupied",@guest1.check_in(@occupied_room))
     end
     #test related to song requests
     #requested song array will be populated by favourite songs
     #taken from guests, compare song list with fav song list and append any
     #songs not listed to song requests
-    def test_006_check_out_of_room
-        check_out(@occupied_room)
+    def test_007_check_out_of_room
+        @guest1.check_out(@occupied_room)
         assert_equal(0,@occupied_room.get_tab)
         assert_equal(10,@occupied_room.get_earnings)
-        refute(@occupied_room.get_room_status)
+        refute(@occupied_room.room_status)
     end
 
 

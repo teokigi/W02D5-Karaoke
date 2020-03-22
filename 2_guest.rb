@@ -2,7 +2,7 @@ class Guest
     def initialize(name,wallet,favourite_song,group_size)
         @name = name
         @wallet = wallet
-        @fav_song = favourite_song
+        @fav_songs = favourite_song
         @group_size = group_size
     end
 
@@ -15,7 +15,7 @@ class Guest
     end
 
     def get_fav_songs
-        return @fav_song.get_name
+        return @fav_songs.get_name
     end
 
     def get_group_size
@@ -26,12 +26,12 @@ class Guest
         return "woohoo"
     end
     def check_in(room_data)
-        if room_data.get_capacity <= @group_size
+        if room_data.get_capacity >= @group_size
             if room_data.room_status == false
                 room_data.occupy_room
                 room_data.add_to_tab(room_data.get_hire_cost)
-                playlist = room_data.get_playlist
                 matched = find_fav_song(room_data)
+                request_unlisted_fav_songs(room_data)
             else
                 return "room occupied"
             end
@@ -51,15 +51,24 @@ class Guest
     end
 
     def find_fav_song(room_data)
-        for favourite_song in @fav_song
             for song in room_data.get_playlist
-                if favourite_song.get_name == song
+                if @fav_songs.get_name == song
                     return group_cheers
                 end
             end
-        end
         return false
     end
 
+    def request_unlisted_fav_songs(room_data)
+        match = 0
+        for song in room_data.get_playlist
+            if song == @fav_songs.get_name
+                match += 1
+            end
+        end
+        if match == 0
+            room_data.add_requests(@fav_songs)
+        end
 
+    end
 end
