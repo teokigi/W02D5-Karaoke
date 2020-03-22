@@ -22,9 +22,21 @@ class Guest
         return @group_size
     end
 
-    # def check_in(room_data)
-    #     room_data.occupy_room
-    # end
+    def check_in(room_data)
+        if room_data.get_capacity <= @group_size
+            room_data.occupy_room
+            room_data.add_to_tab(room_data.get_hire_cost)
+            playlist = room_data.get_playlist
+            match = find_favourites(playlist)
+            if match
+                p "woohoo"
+            end
+        else
+            return "exceeds room capacity"
+        end
+    end
 
+    def check_out(room_data)
+        
 
 end

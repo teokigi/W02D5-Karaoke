@@ -79,4 +79,12 @@ class RoomTest < Minitest::Test
     def test_009_get_hiring_cost
         assert_equal(10,@room1.get_hire_cost)
     end
+
+    def test_010_cash_earned_in_room
+        assert_equal(0,@room1.get_money_earned)
+        @room1.add_to_tab(5)
+        @room1.clear_tab
+        assert_equal(5,@room1.get_money_earned)
+    end
+
 end

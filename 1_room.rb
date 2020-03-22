@@ -1,6 +1,6 @@
 class Room
 
-    def initialize(name, songs, room_size,hire_cost)
+    def initialize(name, songs, room_size, hire_cost)
         @name = name
         @playlist = songs
         @capacity = room_size
@@ -46,6 +46,7 @@ class Room
     end
 
     def clear_tab
+        @money_earned += @tab
         @tab = 0
     end
 

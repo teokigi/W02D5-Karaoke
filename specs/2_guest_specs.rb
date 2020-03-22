@@ -19,7 +19,9 @@ class GuestTest < Minitest::Test
         @song3 = Song.new("Happy New Year")
         @Songs = [@song1,@song2]
 
-        @guest_fav_song = Song.new("My Immortal")
+        @fav_song1 = Song.new("Merry Christmas")
+        @fav_song2 = Song.new("My Immortal")
+        @guest_fav_song = [@fav_song1,@fav_song2]
         @guest1 = Guest.new("Drake",100,@guest_fav_song,2)
         @guest2 = Guest.new("Jim",100,@guest_fav_song,3)
 
@@ -43,6 +45,7 @@ class GuestTest < Minitest::Test
         @guest1.check_in_guests(@room1)
         assert_equal(10,@room1.get_tab)
         assert(@room1.get_room_in_use_status)
+        assert_equal(2,@room1.total_requests)
     end
 
     def test_006_guests_try_to_check_into_occupied_room
@@ -54,7 +57,6 @@ class GuestTest < Minitest::Test
     #songs not listed to song requests
     def test_007_check_out_of_room
         check_out(@occupied_room)
-        assert_equal(2,@occupied_room.total_requests)
         assert_equal(0,@occupied_room.clear_tab)
         assert_equal(10,@occupied_room.get_money_earned)
         refute(@occupied_room.get_room_in_use_status)
