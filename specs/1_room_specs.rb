@@ -12,11 +12,11 @@ class RoomTest < Minitest::Test
     def setup
         @song1 = Song.new("Happy Birthday")
         @song2 = Song.new("Merry Christmas")
-        @song3 = Song.new("Happy New Year")
         @songs = [@song1,@song2]
+
         @new_song = Song.new("This is Halloween")
 
-        @guest1 = Guest.new("jim",100,"Bohemian Rhapsody")
+        @guest1 = Guest.new("jim",100,"Bohemian Rhapsody",2)
         @room1 = Room.new("blue room", @songs, 2)
     end
 
@@ -24,8 +24,8 @@ class RoomTest < Minitest::Test
         assert_equal("blue room",@room1.get_name)
     end
 
-    def test_002_get_song_list
-        assert_equal(["Happy Birthday", "Merry Christmas"], @room1.get_song_list)
+    def test_002_get_playlist
+        assert_equal(["Happy Birthday", "Merry Christmas"], @room1.get_playlist)
     end
 
     def test_003_get_total_songs_and_new_songs
@@ -41,15 +41,18 @@ class RoomTest < Minitest::Test
         assert_equal(2,@room1.get_capacity)
     end
 
-    def test_004_get_room_tab
+    def test_004_room_tab
+#get current tab
+        assert_equal(0,@room1.get_tab)
+#add 5 to tab
+        assert_equal(5,@room1.add_to_tab(5))
+#clear tab
+        @room1.clear_tab
+#confirm cleared tab
         assert_equal(0,@room1.get_tab)
     end
 
-    def test_005_add_room_tab
-        assert_equal(5,@room1.add_to_tab(5))
-    end
-
-    def test_006_room_usage_status
+    def test_005_room_usage_status
 #room should start false as it isn't used
         refute(@room1.room_status)
 #room should become true after being occupied
@@ -60,22 +63,16 @@ class RoomTest < Minitest::Test
         refute(@room1.room_status)
     end
 
-    def test_007_guests_testing
-#test total_guests request
-        assert_equal(0,@room1.total_guests)
-#test adding guests
-        @room1.add_guests(@guest1)
-        assert_equal(1,@room1.total_guests)
-#test clearing out guests
-        @room1.clearout_guests
-        assert_equal(0,@room1.total_guests)
-    end
-
     def test_008_song_requests
+#checks currently held requests
         assert_equal(0,@room1.total_requests)
+#appends new song to requests
         @room1.add_requests(@new_song)
+#checks newly appended song is added
         assert_equal(1,@room1.total_requests)
+#removes newly appended song
         @room1.remove_requests(@new_song)
+#checks appended song is removed
         assert_equal(0,@room1.total_requests)
     end
 

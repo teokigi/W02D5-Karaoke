@@ -2,12 +2,11 @@ class Room
 
     def initialize(name, songs, room_size)
         @name = name
-        @songs = songs
+        @playlist = songs
         @capacity = room_size
         @money_earned = 0
         @tab = 0
         @room_in_use = false
-        @guests = []
         @requests = []
     end
 
@@ -15,33 +14,26 @@ class Room
         return @name
     end
 
-    def get_song_list
-        playlist = @songs.map(&:get_name)
+    def get_playlist
+        playlist = @playlist.map(&:get_name)
+        return playlist
+    end
+
+    def get_requests
+        playlist = @requests.map(&:get_name)
         return playlist
     end
 
     def total_songs
-        return @songs.length
+        return @playlist.length
     end
 
     def add_song(new_song)
-        @songs.push(new_song)
+        @playlist.push(new_song)
     end
 
     def get_capacity
         return @capacity
-    end
-
-    def total_guests
-        return @guests.length
-    end
-
-    def add_guests(new_guest)
-        @guests.push(new_guest)
-    end
-
-    def clearout_guests
-        @guests = []
     end
 
     def get_tab
@@ -52,6 +44,10 @@ class Room
         @tab += addition_amount
     end
 
+    def clear_tab
+        @tab = 0
+    end
+    
     def room_status
         return @room_in_use
     end
@@ -62,14 +58,6 @@ class Room
 
     def unoccupy_room
         @room_in_use = false
-    end
-
-    def add_guests(incoming_guests)
-        @guests.push(incoming_guests)
-    end
-
-    def clearout_guests
-        @guests = []
     end
 
     def total_requests
@@ -84,5 +72,5 @@ class Room
         @requests.delete(request)
     end
 
-    
+
 end

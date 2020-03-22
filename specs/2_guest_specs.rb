@@ -19,17 +19,13 @@ class GuestTest < Minitest::Test
         @song3 = Song.new("Happy New Year")
         @Songs = [@song1,@song2]
 
-        @guest1 = Guest.new("Drake",10,"My Immortal")
-        @guest2 = Guest.new("Dan",10,"The Kids aren't right")
-        @guest3 = Guest.new("Derrik",10,"Bohemian Rhapsody")
-        @two_guests = [@guest1,@guest2]
-        @three_guests = [@guest1,@guest2,@guest3]
-
-        @song_request1 = Song.new("This is Halloween")
+        @guest_fav_song = Song.new("My Immortal")
+        @guest1 = Guest.new("Drake",100,@guest_fav_song,2)
+        @guest2 = Guest.new("Jim",100,@guest_fav_song,3)
 
         @room1 = Room.new("blue room", @Songs, 2)
-        @occupied_room = Room.new ("red room", @songs, 3)
-        @occupied_room.check_in_guests(@two_guests)
+        @occupied_room = Room.new ("red room", @songs, 2)
+        @occupied_room.check_in_guests(@guest1)
 
 
     end
@@ -42,29 +38,26 @@ class GuestTest < Minitest::Test
         assert_equal(10,@guest2.get_wallet)
     end
 
-    def test_003_request_songs
-        update_song_request(@song_request1)
-    end
-
-    def test_004_transfer_song_request_to_playlist
-        update_playlist(@song_request1)
-    end
 
     def test_005_guests_check_into_new_room
-        check_in_guests(@two_guests)
+        @two_guests.check_in_guests(@room1)
         assert_equal(10,@room1.get_tab)
         assert(@room1.get_room_in_use_status)
     end
 
     def test_006_guests_try_to_check_into_occupied_room
-        assert_equal("error",@occupied_room.check_in_guests)
+        assert_equal("exceeds room capacity",@occupied_room.check_in_guests)
     end
-
+    #test related to song requests
+    #requested song array will be populated by favourite songs
+    #taken from guests, compare song list with fav song list and append any
+    #songs not listed to song requests
     def test_007_check_out_of_room
-        check_out(@room1)
-        assert_equal(0,@room1.clear_tab)
-        assert_equal(10,@room1.get_money_earned)
-        refute(@room1.get_room_in_use_status)
+        check_out(@occupied_room)
+        assert_equal(2,@occupied_room.total_requests)
+        assert_equal(0,@occupied_room.clear_tab)
+        assert_equal(10,@occupied_room.get_money_earned)
+        refute(@occupied_room.get_room_in_use_status)
     end
 
 
