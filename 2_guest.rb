@@ -22,14 +22,18 @@ class Guest
         return @group_size
     end
 
+    def group_cheers
+        return "woohoo"
+    end
     def check_in(room_data)
         if room_data.get_capacity <= @group_size
-            room_data.occupy_room
-            room_data.add_to_tab(room_data.get_hire_cost)
-            playlist = room_data.get_playlist
-            match = find_favourites(playlist)
-            if match
-                p "woohoo"
+            if room_data.room_status == false
+                room_data.occupy_room
+                room_data.add_to_tab(room_data.get_hire_cost)
+                playlist = room_data.get_playlist
+                matched = find_fav_song(room_data)
+            else
+                return "room occupied"
             end
         else
             return "exceeds room capacity"
@@ -37,6 +41,25 @@ class Guest
     end
 
     def check_out(room_data)
-        
+        pay_tab(room_data)
+        room_data.clear_tab
+        room_data.unoccupy_room
+    end
+
+    def pay_tab(room_data)
+        @wallet -= room_data.get_tab
+    end
+
+    def find_fav_song(room_data)
+        for favourite_song in @fav_song
+            for song in room_data.get_playlist
+                if favourite_song.get_name == song
+                    return group_cheers
+                end
+            end
+        end
+        return false
+    end
+
 
 end

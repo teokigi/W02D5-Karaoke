@@ -50,6 +50,9 @@ class Room
         @tab = 0
     end
 
+    def get_earnings
+        return @money_earned
+    end
     def room_status
         return @room_in_use
     end
