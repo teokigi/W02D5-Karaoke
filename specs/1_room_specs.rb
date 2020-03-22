@@ -13,10 +13,11 @@ class RoomTest < Minitest::Test
         @song1 = Song.new("Happy Birthday")
         @song2 = Song.new("Merry Christmas")
         @song3 = Song.new("Happy New Year")
-        @Songs = [@song1,@song2]
+        @songs = [@song1,@song2]
+        @new_song = Song.new("This is Halloween")
 
         @guest1 = Guest.new("jim",100)
-        @room1 = Room.new("blue room", @Songs, 2)
+        @room1 = Room.new("blue room", @songs, 2)
     end
 
     def test_001_get_name
@@ -27,8 +28,13 @@ class RoomTest < Minitest::Test
         assert_equal(["Happy Birthday", "Merry Christmas"], @room1.get_song_list)
     end
 
-    def test_003_get_total_songs
+    def test_003_get_total_songs_and_new_songs
+#accertain current songs are 2
         assert_equal(2,@room1.total_songs)
+#append 1 new song
+        @room1.add_song(@new_song)
+#accertain current songs are now 3
+        assert_equal(3,@room1.total_songs)
     end
 
     def test_003_get_room_capacity
@@ -43,39 +49,34 @@ class RoomTest < Minitest::Test
         assert_equal(5,@room1.add_to_tab(5))
     end
 
-    def test_006_room_usage_status_true
+    def test_006_room_usage_status
+#room should start false as it isn't used
+        refute(@room1.room_status)
+#room should become true after being occupied
+        @room1.occupy_room
         assert(@room1.room_status)
-    end
-
-    def test_007_room_usage_status_fail
+#room should return to false after use
+        @room1.unoccupy_room
         refute(@room1.room_status)
     end
 
-    def test_008_total_guests
-        assert(0,@room1.total_guests)
-    end
-
-    def test_009_add_guest
+    def test_007_guests_testing
+#test total_guests request
+        assert_equal(0,@room1.total_guests)
+#test adding guests
         @room1.add_guests(@guest1)
         assert_equal(1,@room1.total_guests)
-    end
-
-    def test_010_remove_guest
-        @room1.add_guests(@guest1)
-        @room1.remove_guests
+#test clearing out guests
+        @room1.clearout_guests
         assert_equal(0,@room1.total_guests)
     end
 
-    def test_011_total_song_requests
+    def test_008_song_requests
+        assert_equal(0,@room1.total_requests)
+        @room1.add_requests(@new_song)
+        assert_equal(1,@room1.total_requests)
+        @room1.remove_requests(@new_song)
         assert_equal(0,@room1.total_requests)
     end
 
-    def test_012_add_requests
-        assert_equal(1,@room1.add_requests)
-    end
-
-    def test_013_remove_requests
-        @room1.add_requests
-        assert_equal(0,@room1.remove_requests)
-    end
 end

@@ -8,7 +8,7 @@ class Room
         @tab = 0
         @room_in_use = false
         @guests = []
-        @song_requests = []
+        @requests = []
     end
 
     def get_name
@@ -24,12 +24,24 @@ class Room
         return @songs.length
     end
 
+    def add_song(new_song)
+        @songs.push(new_song)
+    end
+
     def get_capacity
         return @capacity
     end
 
     def total_guests
         return @guests.length
+    end
+
+    def add_guests(new_guest)
+        @guests.push(new_guest)
+    end
+
+    def clearout_guests
+        @guests = []
     end
 
     def get_tab
@@ -44,7 +56,32 @@ class Room
         return @room_in_use
     end
 
-    def total_requests
-        return @song_requests.length
+    def occupy_room
+        @room_in_use = true
     end
+
+    def unoccupy_room
+        @room_in_use = false
+    end
+
+    def add_guests(incoming_guests)
+        @guests.push(incoming_guests)
+    end
+
+    def clearout_guests
+        @guests = []
+    end
+
+    def total_requests
+        return @requests.length
+    end
+
+    def add_requests(new_request)
+        @requests.push(new_request)
+    end
+
+    def remove_requests(request)
+        @requests.delete(request)
+    end
+
 end
