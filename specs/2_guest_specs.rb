@@ -19,9 +19,9 @@ class GuestTest < Minitest::Test
         @song3 = Song.new("Happy New Year")
         @Songs = [@song1,@song2]
 
-        @guest1 = Guest.new("Drake",10)
-        @guest2 = Guest.new("Dan",10)
-        @guest3 = Guest.new("Derrik",10)
+        @guest1 = Guest.new("Drake",10,"My Immortal")
+        @guest2 = Guest.new("Dan",10,"The Kids aren't right")
+        @guest3 = Guest.new("Derrik",10,"Bohemian Rhapsody")
         @two_guests = [@guest1,@guest2]
         @three_guests = [@guest1,@guest2,@guest3]
 
@@ -41,33 +41,26 @@ class GuestTest < Minitest::Test
     def test_002_get_wallet_value_of_guest
         assert_equal(10,@guest2.get_wallet)
     end
-    def test_003_check_can_fit_guests_in_room_true
-        assert(@room1.capacity_check(@two_guests))
-    end
 
-    def test_004_check_can_fit_guests_in_room_false
-        refute(@room1.capacity_check(@three_guests))
-    end
-
-    def test_005_request_songs
+    def test_003_request_songs
         update_song_request(@song_request1)
     end
 
-    def test_006_transfer_song_request_to_playlist
+    def test_004_transfer_song_request_to_playlist
         update_playlist(@song_request1)
     end
 
-    def test_007_guests_check_into_new_room
+    def test_005_guests_check_into_new_room
         check_in_guests(@two_guests)
         assert_equal(10,@room1.get_tab)
         assert(@room1.get_room_in_use_status)
     end
 
-    def test_008_guests_try_to_check_into_occupied_room
+    def test_006_guests_try_to_check_into_occupied_room
         assert_equal("error",@occupied_room.check_in_guests)
     end
 
-    def test_008_check_out_of_room
+    def test_007_check_out_of_room
         check_out(@room1)
         assert_equal(0,@room1.clear_tab)
         assert_equal(10,@room1.get_money_earned)

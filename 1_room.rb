@@ -84,4 +84,5 @@ class Room
         @requests.delete(request)
     end
 
+    
 end

@@ -16,7 +16,7 @@ class RoomTest < Minitest::Test
         @songs = [@song1,@song2]
         @new_song = Song.new("This is Halloween")
 
-        @guest1 = Guest.new("jim",100)
+        @guest1 = Guest.new("jim",100,"Bohemian Rhapsody")
         @room1 = Room.new("blue room", @songs, 2)
     end
 
