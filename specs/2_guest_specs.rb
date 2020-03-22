@@ -23,8 +23,8 @@ class GuestTest < Minitest::Test
         @guest1 = Guest.new("Drake",100,@guest_fav_song,2)
         @guest2 = Guest.new("Jim",100,@guest_fav_song,3)
 
-        @room1 = Room.new("blue room", @Songs, 2)
-        @occupied_room = Room.new ("red room", @songs, 2)
+        @room1 = Room.new("blue room", @Songs, 2, 10)
+        @occupied_room = Room.new ("red room", @songs, 2, 10)
         @occupied_room.check_in_guests(@guest1)
 
 
@@ -40,7 +40,7 @@ class GuestTest < Minitest::Test
 
 
     def test_005_guests_check_into_new_room
-        @two_guests.check_in_guests(@room1)
+        @guest1.check_in_guests(@room1)
         assert_equal(10,@room1.get_tab)
         assert(@room1.get_room_in_use_status)
     end

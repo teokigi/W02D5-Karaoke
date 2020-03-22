@@ -14,12 +14,17 @@ class Guest
         return @wallet
     end
 
-    def get_fav_song
-        return @fav_song
+    def get_fav_songs
+        return @fav_song.get_name
     end
 
     def get_group_size
         return @group_size
     end
+
+    # def check_in(room_data)
+    #     room_data.occupy_room
+    # end
+
 
 end

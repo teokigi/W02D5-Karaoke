@@ -17,7 +17,7 @@ class RoomTest < Minitest::Test
         @new_song = Song.new("This is Halloween")
 
         @guest1 = Guest.new("jim",100,"Bohemian Rhapsody",2)
-        @room1 = Room.new("blue room", @songs, 2)
+        @room1 = Room.new("blue room", @songs, 2,10)
     end
 
     def test_001_get_name
@@ -76,4 +76,7 @@ class RoomTest < Minitest::Test
         assert_equal(0,@room1.total_requests)
     end
 
+    def test_009_get_hiring_cost
+        assert_equal(10,@room1.get_hire_cost)
+    end
 end
